@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Suit Jepang</title>
+    <style>
+     
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div id="home-container">
+        <h1>Selamat Datang di Permainan Suit Jepang!</h1>
+        <button id="start-btn" onclick="startGame()">Mulai Permainan</button>
+      </div>
+
+      <!--Tempat Bermain-->
+      <div id="game-container">
+        <!--pilihan anda-->
+        <div style="height: 150px; width: 100%">
+          <ul class="lawan">
+            <li style="width: 200px;">
+              <ul class="pilihan">
+                <li   style="height: 50px;">
+                  <h2>ANDA</h2>
+                </li>
+                <li id="player-choice-display" style="margin: 0; padding: 0;"></li>
+              </ul>
+            </li>
+            <li style="width: 200px; display: flex; justify-content: center; align-items: center;">
+              <h1>VS</h1>
+            </li>
+            <li style="width: 200px;">
+              <ul class="pilihan">
+                <li  style="height: 50px;">
+                  <h2>LAWAN</h2>
+                </li>
+                <li id="computer-choice-display"></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!--Pemilihan Karakter-->
+        <div style="height: 300px; width: 100%">
+          <h3 align="center" style="height: 30px; margin: 0; padding: 0">
+            Pilih Karakter Mu
+          </h3>
+          <ul class="lawan" style="height: 220; padding-top: 30px">
+            <li>
+              <ul class="pilihan" onclick="makeChoice('Batu')">
+                <li><img src="rock.png" alt="" /></li>
+                <li style="color: #bb99e8">
+                  <h3>BATU</h3>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul class="pilihan" onclick="makeChoice('Gunting')">
+                <li><img src="scissors.png" alt="" /></li>
+                <li style="color: #bb99e8">
+                  <h3>GUNTING</h3>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul class="pilihan" onclick="makeChoice('Kertas')">
+                <li><img src="paper.png" alt="" /></li>
+                <li style="color: #bb99e8">
+                  <h3>KERTAS</h3>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!--hasil permainan-->
+        <div style="height: 150px; width: 100%;">
+          <ul class="lawan" style="padding-top: 30px;">
+            <li style="width: 200px;">
+              <ul class="pilihan2">
+                <li>
+                  <h2>Player</h2>
+                </li>
+              </ul>
+            </li>
+            <li style="width: 200px;">
+              <ul class="pilihan2" style="height: 120px;">
+                <li class="tampil">
+                  <h3>HASIL</h3>
+                </li>
+                <li id="result-display"></li>
+              </ul>
+            </li>
+            <li style="width: 200px;">
+              <ul class="pilihan2" style="height: 120px;">
+                <li class="tampil">
+                  <h3>SCORE</h3>
+                </li>
+                <li id="score-display"></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!--Loading-->
+      <div id="loading-screen">
+        <h1 style="background-color: white;">Tunggu Sebentar...</h1>
+      </div>
+    </div>
+
+    <script>
+      let score = 0;
+      let resultDisplay = document.getElementById("result-display");
+      function startGame() {
+        document.getElementById("home-container").style.display = "none";
+        document.getElementById("game-container").style.display = "none";
+        document.getElementById("loading-screen").style.display = "block";
+
+        // Simulasi proses loading
+        setTimeout(() => {
+          document.getElementById("loading-screen").style.display = "none";
+          document.getElementById("game-container").style.display = "flex";
+        }, 2000);
+      }
+      //fungsi untuk menampilkan pilihan pemain dan pilihan acak komputer
+      function makeChoice(choice) {
+        document.getElementById("player-choice-display").innerHTML =
+          "<h2>" + choice + "</h2>";
+        let computerChoice = getRandomChoice();
+        document.getElementById("computer-choice-display").innerHTML =
+          "<h2>" + computerChoice + "</h2>";
+        determineWinner(choice, computerChoice);
+      }
+      //Fungsi untuk mendapatkan pilihan karakter acak untuk komputer
+      function getRandomChoice() {
+        const choices = ["Batu", "Gunting", "Kertas"];
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        return choices[randomIndex];
+      }
+
+      function determineWinner(playerChoice, computerChoice) {
+        // Tambahkan logika penentuan pemenang dan perbarui skor
+        if (playerChoice === computerChoice) {
+          resultDisplay.innerHTML = "<h3>Seri!</h3>";
+        } else if (
+          (playerChoice === "Batu" && computerChoice === "Gunting") ||
+          (playerChoice === "Gunting" && computerChoice === "Kertas") ||
+          (playerChoice === "Kertas" && computerChoice === "Batu")
+        ) {
+          resultDisplay.innerHTML = "<h3>Menang!</h3>";
+          score++;
+        } else {
+          resultDisplay.innerHTML = "<h3>Kalah!</h3>";
+          score--;
+        }
+
+        // Perbarui tampilan skor
+        document.getElementById("score-display").innerHTML =
+          "<h3>" + score + "</h3>";
+      }
+    </script>
+
+  </body>
+</html>
