@@ -1,5 +1,5 @@
 body {
-    background-image: url(pxfuel.jpg);
+    background-image: url('pxfuel.jpg');
     display: flex;
     align-items: center;
     justify-content: center;
